@@ -11,16 +11,20 @@ RStudio 2022.07.1+554 "Spotted Wakerobin" Release (7872775ebddc40635780ca1ed2389
 - **Novel indicators.** implementation for traditional (recall, MCC, G1, G2, AUC, PF, etc.) and novel performance indicators (ROI, eIFA).     
 
 ### Usage of MATTER
-1. To get prediction results of baseline model ONE on specific datasets,run:  
-   `./run_ONE.r`  
-2. To compute performance indicators of compared models under aligned SQA-effort thresholds, run:   
- `./r_scirpt/computeIndicatorFromDetailResult.r`  
+1. To config the datasets, evaluated models, the path of origin prediction results in your evaluation experiments, modify:    
+ `./config.r`    
 
-Required input format of prediction results of compared models:
+Note: prediction result files of compared models need to contain at least four columns below so that MATTER can evaluated in under specific SQA-effort:
 
 | sloc  | predictedValue | predictLabel | actualBugLabel |
-| ------------- | ------------- | ------------- | ------------- |
+| :-------- | :---------- | :----------- | :----------|
 | numeric  | numeric  | binary  | binary  |
+
+2. To get prediction results of baseline model ONE on specific datasets,run:  
+   `./run_ONE.r`  
+3. To compute performance indicators of compared models under aligned SQA-effort thresholds, run:   
+ `./r_scirpt/computeIndicatorFromDetailResult.r` 
+
 
 
 
