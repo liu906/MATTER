@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="experimentconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="experimentconfig experimentconfig.xsd">
+ <loader name="CSVPureFolderLoader" datalocation="benchmark/data/MA-SZZ-2020" relative="false"/>
+ <versionfilter name="MinClassNumberFilter" param="5" />
+ <resultspath path="benchmark/results-csv/CamargoCruz09-DT"/>
+ <trainer name="WekaLocalFQTraining" param="RF weka.classifiers.trees.RandomForest -CVPARAM I 5 25 5" />
+ <repetitions number="10" />
+ <eval name="NormalWekaEvaluation" param="" />
+ <storage name="MySQLResultStorage" param="" />
+</config>

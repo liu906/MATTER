@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="experimentconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="experimentconfig experimentconfig.xsd">
+ <loader name="CSVPureFolderLoader" datalocation="benchmark/data/NETGENE" relative="false"/>
+ <versionfilter name="MinClassNumberFilter" param="5" />
+ <resultspath path="benchmark/results-csv/CamargoCruz09-DT"/>
+ <trainer name="WekaTraining" param="DT weka.classifiers.trees.J48 -CVPARAM C 0.1 0.3 5" />
+ <preprocessor name="LogarithmTransform" param="" />
+ <preprocessor name="MedianAsReference" param="10" />
+ <eval name="NormalWekaEvaluation" param="" />
+ <storage name="MySQLResultStorage" param="" />
+</config>

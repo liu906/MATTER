@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="experimentconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="experimentconfig experimentconfig.xsd">
+ <loader name="CSVPureFolderLoader" datalocation="benchmark/data/ALLJURECZKO" relative="false"/>
+ <versionfilter name="MinClassNumberFilter" param="5" />
+ <resultspath path="benchmark/results-csv/Peters15-NB"/>
+ <trainer name="WekaTraining" param="NB weka.classifiers.bayes.NaiveBayes" />
+ 
+ <setwisepreprocessor name="LogarithmTransform" param="" />
+ <setwiseselector name="LACE2" param="0.4" />
+ <pointwiseselector name="TurhanFilter" param="1" />
+ <eval name="NormalWekaEvaluation" param="" />
+ <repetitions number="10" />
+ <storage name="MySQLResultStorage" param="" />
+</config>

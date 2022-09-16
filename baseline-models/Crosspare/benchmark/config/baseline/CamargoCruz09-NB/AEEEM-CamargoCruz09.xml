@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns="experimentconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="experimentconfig experimentconfig.xsd">
+ <loader name="CSVPureFolderLoader" datalocation="benchmark/data/AEEEM" relative="false"/>
+ <versionfilter name="MinClassNumberFilter" param="5" />
+ <resultspath path="benchmark/results-csv/CamargoCruz09-NB"/>
+ <trainer name="WekaTraining" param="NB weka.classifiers.bayes.NaiveBayes" />
+ 
+ <preprocessor name="LogarithmTransform" param="" />
+ <preprocessor name="MedianAsReference" param="10" />
+ <eval name="NormalWekaEvaluation" param="" />
+ <storage name="MySQLResultStorage" param="" />
+</config>
