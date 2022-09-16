@@ -17,7 +17,7 @@ RStudio 2022.07.1+554 "Spotted Wakerobin" Release (7872775ebddc40635780ca1ed2389
 Required input format of prediction results of compared models:
 
 | sloc  | predictedValue | predictLabel | actualBugLabel |
-| ------------- | ------------- |
+| ------------- | ------------- | ------------- | ------------- |
 | numeric  | numeric  | binary  | binary  |
 
 
