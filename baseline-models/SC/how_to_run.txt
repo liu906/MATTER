@@ -1,4 +1,1 @@
-1. run R script SC.r, change code to set the file path of result, save the result to SC_result.csv
-2. run get_cla_cutoff.r, get cutoff of SC, and divide the result by dataset
-
-!!! MDP-PC5.csv will cause a memory exceed error、
+run R script SC.r, change code to set the data path and the result path
