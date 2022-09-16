@@ -12,7 +12,7 @@ RStudio 2022.07.1+554 "Spotted Wakerobin" Release (7872775ebddc40635780ca1ed2389
 - available for statistic tests
 
 
-####Usage of MATTER
+#### Usage of MATTER
 
 Required input format:
 
@@ -27,7 +27,7 @@ Required input format:
 
 ----
                     
-###Implementations of models 
+### Implementations of models 
 in `./baseline-models/`
 
 | model  | code folder  | main language |publication|
@@ -50,7 +50,7 @@ in `./baseline-models/`
 
 ---
 
-###Datasets
+### Datasets
 in `./dataset/nominal/dataset.7z`
 
 | Dataset  | #project  |#releases |
