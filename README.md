@@ -8,21 +8,26 @@ RStudio 2022.07.1+554 "Spotted Wakerobin" Release (7872775ebddc40635780ca1ed2389
 ### Three main features of MATTER
 - **SQA-effort alignment.** compare multiple defect prediction models under the same available code inspection effort or context switch effort 
 - **baseline model ONE.** a baseline model "ONE" for defect prediction  
-- **Novel indicators.** implementation for traditional (recall, MCC, G1, G2, AUC, PF, etc.) and novel performance indicators (ROI, eIFA).   
+- **Novel indicators.** implementation for traditional (recall, MCC, G1, G2, AUC, PF, etc.) and novel performance indicators (ROI, eIFA).     
 
-#### Usage of MATTER
-
-Required input format:  
+### Usage of MATTER
+1. To get prediction results of baseline model ONE on specific datasets,run `./run_ONE.r`
+2. To compute performance indicators of compared models under aligned SQA-effort thresholds `./r_scirpt/computeIndicatorFromDetailResult.r`
+Required input format of prediction results of compared models:
 
 | sloc  | predictedValue | predictLabel | actualBugLabel |
-| :---------| :------------ |:---------------:| -----:|
+| ------------- | ------------- |
 | numeric  | numeric  | binary  | binary  |
+
+
+
+
 
 
 ----
                     
 ### Implementations of models 
-in `./baseline-models/`    
+in `./baseline-models/`
 
 | model  | code folder  | main language |publication|
 | :---------| :------------ |:---------------:| -----:|
@@ -45,7 +50,7 @@ in `./baseline-models/`
 ---
 
 ###Datasets
-in `./dataset/nominal/dataset.7z`   
+in `./dataset/nominal/dataset.7z`
 
 | Dataset  | #project  |#releases |
 | :------------ |:---------------:| -----:|
