@@ -1,0 +1,6 @@
+# CLAMI is a java project that developed in Eclipse
+1. run gradle build on a Linux machine. (will failed on my Win10 PC, no problem on Ubuntu)
+2. get updated CLAMI.bat and CLAMI, copy them to bin/
+3. clean CLA_result.csv, keep the column names
+3. run batch.bat, and the result will be written into CLA_result.csv line by line
+4. run get_cla_cutoff.r to get the cutoff (tp+np) of CLA, and seperate CLA_result.csv by dataset
