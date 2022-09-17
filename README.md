@@ -72,9 +72,15 @@ in `./dataset/nominal/dataset.7z`
 ### Scripts for RQs and discussions in paper
 `run_one.r ` Get the prediction results of **ONE** on datasets, with different values of parameters (*cutoff* and *excluded_code_size_percentage*) of ONE. The results are saved in `./One-results`
 
-`./rscript/computeIndicatorFromDetailResult.r`  Get the prediction performance of  models in RQ3 and RQ4. `threshold=0.2` indicates comparing models under 20% PII. `threshold=20` indicates comparing models under 20% PCI.
+`./rscript/computeIndicatorFromDetailResult.r`  Get the prediction performance of  models in RQ1, RQ2, RQ3, RQ4. `threshold=0.2` indicates comparing models under 20% PII. `threshold=20` indicates comparing models under 20% PCI.
 
-`./rscript/KSETE_performance.R`  Run KSETE and add mean KSETE under one-to-one CPDP result to RQ4
+`./rscript/KSETE_performance.R`  Run KSETE and add mean KSETE under one-to-one CPDP result to evaluated state of the art models
+
+`./rscript/new_rq_threshold.r`  Draw heatmap for RQ1
+
+`./rscript/indicator_relationship_under_threshold.r` RQ2
+
+`./rscript/stability_of_EASC_NE_simulate.r` RQ3 Fig.10. Get the simulated prediction results of EASC_NE 
 
 `./rscript/splitResultByDataset.R`   Split result of RQ3 and RQ4 by dataset
 
@@ -85,4 +91,8 @@ in `./dataset/nominal/dataset.7z`
 `./rscript/new_excluded_code_size_percentage.r`  Discussion 1
 
 `./rscript/dicussion2.r`  Discussion 2
+
+
+
+
 
