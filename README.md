@@ -69,13 +69,20 @@ in `./dataset/nominal/dataset.7z`
 | ReLink      | 3 | 3 |
 
 ----
-### Scripts and results of RQs in paper
-- To get results of RQ1
-- To get results of RQ2
-- To get results of RQ3
-- To get results of RQ4
--  To get results of Discussion1
--  To get results of Discussion2
+### Scripts for RQs and discussions in paper
+`run_one.r ` Get the prediction results of **ONE** on datasets, with different values of parameters (*cutoff* and *excluded_code_size_percentage*) of ONE. The results are saved in `./One-results`
 
+`./rscript/computeIndicatorFromDetailResult.r`  Get the prediction performance of  models in RQ3 and RQ4. `threshold=0.2` indicates comparing models under 20% PII. `threshold=20` indicates comparing models under 20% PCI.
 
+`./rscript/KSETE_performance.R`  Run KSETE and add mean KSETE under one-to-one CPDP result to RQ4
+
+`./rscript/splitResultByDataset.R`   Split result of RQ3 and RQ4 by dataset
+
+`./rscript/ScottKnottESD.r`  Get Scott-Knott ESD test results of models comparisons in  RQ3 and RQ4
+
+`./rscript/rq1_table.r `  Get formatted table of median,mean,standard deviation values of models' performance indicators for RQ3 and RQ4
+
+`./rscript/new_excluded_code_size_percentage.r`  Discussion 1
+
+`./rscript/dicussion2.r`  Discussion 2
 
