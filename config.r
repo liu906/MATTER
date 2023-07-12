@@ -61,10 +61,10 @@ models['CamargoCruz09-NB','res_root'] <- file.path('baseline-result','CamargoCru
 models['Amasaki15-NB','res_root'] <- file.path('baseline-result','Amasaki15-NB')
 models['Peters15-NB','res_root'] <- file.path('baseline-result','Peters15-NB')
 models['DSSDPP','res_root'] <- file.path('baseline-result','DSSDPP')
-# models['KSETE','res_root'] <- file.path('baseline-result','KSETE')
 
 
-#top-core暂时不用了 KSETE和MSMDA会out of memory 暂时也不用了
+
+
 
 
 motivate_models <- data.frame()

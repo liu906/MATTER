@@ -265,7 +265,8 @@ bash(file_path,prefix,add_default_threshold=FALSE)
 # rq2
 file_path <- 'result/rq2/'
 prefix <- 'stateOfArt'
-bash(file_path,prefix,add_default_threshold=TRUE)
+bash(file_path,prefix,add_default_threshold=FALSE)
+#bash(file_path,prefix,add_default_threshold=TRUE)
 
 ########################################
 
@@ -278,7 +279,7 @@ bash(file_path,prefix,add_default_threshold=FALSE)
 # rq2
 file_path <- 'result/rq2/'
 prefix <- 'stateOfArt'
-bash(file_path,prefix,add_default_threshold=TRUE)
+bash(file_path,prefix,add_default_threshold=FALSE)
 
 
 

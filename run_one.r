@@ -22,11 +22,11 @@ run_ONE <- function(target_sets_root,res_root,cutoff,excluded_code_size_percenta
 
 
 list_dataset <- c('AEEEM','RELINK','ALLJURECZKO','MA-SZZ-2020','IND-JLMIV+R-1Y')
-list_dataset <- c('AEEEM_LDHHWCHU')
+# list_dataset <- c('AEEEM_LDHHWCHU')
 
 excluded_code_size_percentages <- c(20)
-cutoffs <- c(0.2,20)
-
+# cutoffs <- c(0.2,20)
+cutoffs <- seq(0.31,0.39,0.01)
 for (dataset in list_dataset){
   target_sets_root = datasets[dataset,'root']
   name_actualBugLabel = datasets[dataset,'actualBugLabel']

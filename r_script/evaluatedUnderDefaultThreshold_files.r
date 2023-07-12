@@ -6,11 +6,16 @@ source('./run.r')
 source('../One.r')
 library(effsize)
 
-root = '../baseline-result/DSSDPP/detail_result_179/'
+# root = '../baseline-result/DSSDPP/detail_result_179/'
+root = '../baseline-result/MSMDA/originDataResult/'
+root = '../baseline-result/Kcore/originDataResult/'
 # root = '../baseline-result/DSSDPP/CM1_30/'
 # root = '../baseline-result/DSSDPP/ReLink_ratio0.9_rep30/'
-model_name = 'DSSDPP'
+model_name = 'MSMDA'
+model_name = 'top-core'
 threshold = -1
+threshold = 0.2
+threshold = 20
 
 files <- list.files(root,full.names = TRUE)
 first_flag = TRUE
@@ -25,7 +30,7 @@ for(file in files){
     cutoff=threshold
   }
   one_detail_result <- one('',file,20,cutoff,'actualBugLabel','sloc')
-  one_metric <- calculateIndicator(one_detail_result,threshold = -1)
+  one_metric <- calculateIndicator(one_detail_result,threshold = threshold)
   metric$one_value <- one_metric$value
   t_metric <- as.data.frame(t(metric))
   t_metric$target <- basename(file)
@@ -40,10 +45,10 @@ for(file in files){
 rownames(total_res) <- seq(nrow(total_res))
 total_res$model <- rep(c(model_name,'ONE'),nrow(total_res)/2)
 
-#write.csv(total_res,paste('result/otherModels/',model_name,'_ONE_default_',threshold,'_179.csv',sep=''),row.names = FALSE)
+write.csv(total_res,paste('result/otherModels/',model_name,'_ONE_originDatasets_',threshold,'.csv',sep=''),row.names = FALSE)
 
 
-cat(indicator, 'pvalue','cliff','\n')
+
 for (indicator in c('recall','mcc','auc_roc','ifap2','roi_tp')){
   pvalue <- wilcox.test(total_res[total_res$model==model_name,indicator],total_res[total_res$model=='ONE',indicator],pair=TRUE)$p.value
   cliff <- cliff.delta(total_res[total_res$model==model_name,indicator],total_res[total_res$model=='ONE',indicator])$estimate

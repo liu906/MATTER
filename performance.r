@@ -1,5 +1,5 @@
 library(pROC)
-
+library(zoo)
 change_label_by_threshold <- function(detail_result,threshold){
   # threshold -1: default classification threshold
   # threshold 0-1: number of module alignment
@@ -19,7 +19,6 @@ change_label_by_threshold <- function(detail_result,threshold){
   
   cumsum_sloc <- cumsum(detail_result$sloc)
   cumsum_tp <- cumsum(detail_result$actualBugLabel)
-  
   
   
   if(threshold==-1){
@@ -68,7 +67,9 @@ calculateIndicator <- function(detail_result,threshold){
   
   cumsum_sloc <- cumsum(detail_result$sloc)
   cumsum_tp <- cumsum(detail_result$actualBugLabel)
-  
+  ratio_sloc = cumsum_sloc/cumsum_sloc[length(cumsum_sloc)]
+  ratio_recall = cumsum_tp/cumsum_tp[length(cumsum_tp)]
+  ce <- sum(diff(ratio_sloc)*rollmean(ratio_recall,2))
   
   
   if(threshold==-1){
@@ -246,25 +247,35 @@ calculateIndicator <- function(detail_result,threshold){
   df_res['roi3','value'] <- roi3
   df_res['roi_tp','value'] <- roi_tp
   df_res['precision','value'] <- precision
+  df_res['ce','value'] <- ce
   return(df_res)
 }
 
 
 summaryPerformance2 <- function(root_path,threshold,mode){
-  cols <- c('community','source','target','tp','fp','tn','fn','f1','g1','pf','pci','pii','recall','mcc','ifa','ifap','mdd','ifap2','ifa_pii','ifa_pci','ifap3')
+  # cols <- c('community','source','target','tp','fp','tn','fn','f1','g1','pf','pci','pii','recall','mcc','ifa','ifap','mdd','ifap2','ifa_pii','ifa_pci','ifap3')
   
   files <- list.files(paste(root_path,sep=''))
-  total_res <- data.frame(matrix(nrow = 0,ncol = length(cols)))
-  colnames(total_res) <- cols
-  
+  #total_res <- data.frame(matrix(nrow = 0,ncol = length(cols)))
+  #colnames(total_res) <- cols
+  first_flag <- T
   for(file in files){
     cat(file,'\n')
-    data <- read.csv(file=paste(root_path,file,sep = ''))
+    data <- read.csv(file=file.path(root_path,file,sep = ''))
     perfs <- calculateIndicator(data,threshold = threshold)
     community <- strsplit(file,split = '-')[[1]][1]
     source <- strsplit(file,split = '_')[[1]][1]
     target <- strsplit(file,split = '_')[[1]][2]
-    total_res[nrow(total_res)+1,] <- c(community,source,target,perfs)
+    # total_res[nrow(total_res)+1,] <- c(community,source,target,perfs)
+    temp <- data.frame(community=community,source=source,target=target,t(perfs))
+    temp$acc <- (temp$tp+temp$tn) / (temp$tp+temp$tn+temp$fp+temp$fn)
+    if(first_flag){
+      first_flag <- F
+      total_res <- temp
+    }else{
+      total_res[nrow(total_res)+1,] <- temp
+    }
+    
   }
   if(mode=='SSC'){
     total_res$roi = as.numeric(total_res$recall)/ as.numeric(total_res$pii)  

@@ -40,6 +40,8 @@ run <- function(baselines,
   DF_roi3 <- data.frame()
   DF_roi_tp <- data.frame()
   DF_precision <- data.frame()
+  DF_ce <- data.frame()
+  
   for (i in 1:length(baselines)) {
     cat(baselines[i])
     cat('\n')
@@ -48,8 +50,8 @@ run <- function(baselines,
       files <-
         list.files(file.path('r_script/', baseline_paths[i]), full.names = TRUE)
       
-    }
-    else{
+    }else{
+    
       dirs <- list.dirs(baseline_paths[i])
       files <- c()
       arr_dataset <- c()
@@ -87,6 +89,7 @@ run <- function(baselines,
     arr_roi3 <- c()
     arr_roi_tp <- c()
     arr_precision <- c()
+    arr_ce <- c()
     
     for (file in files) {
       detail_result <- read.csv(file)
@@ -119,6 +122,7 @@ run <- function(baselines,
       roi3 <- df_res['roi3', 'value']
       roi_tp <- df_res['roi_tp', 'value']
       precision <- df_res['precision', 'value']
+      ce <- df_res['ce', 'value']
       
       arr_tp <- append(arr_tp, tp)
       arr_fp <- append(arr_fp, fp)
@@ -142,6 +146,7 @@ run <- function(baselines,
       arr_roi3 <- append(arr_roi3, roi3)
       arr_roi_tp <- append(arr_roi_tp, roi_tp)
       arr_precision <- append(arr_precision, precision)
+      arr_ce <- append(arr_ce, ce)
     }
     
     if (nrow(DF_pci) == 0) {
@@ -167,6 +172,7 @@ run <- function(baselines,
       DF_roi3[basename(files), 'dataset'] <- arr_dataset
       DF_roi_tp[basename(files), 'dataset'] <- arr_dataset
       DF_precision[basename(files), 'dataset'] <- arr_dataset
+      DF_ce[basename(files), 'dataset'] <- arr_dataset
       
       DF_tp[basename(files), baselines[i]] <- arr_tp
       DF_fp[basename(files), baselines[i]] <- arr_fp
@@ -190,6 +196,7 @@ run <- function(baselines,
       DF_roi3[basename(files), baselines[i]] <- arr_roi3
       DF_roi_tp[basename(files), baselines[i]] <- arr_roi_tp
       DF_precision[basename(files), baselines[i]] <- arr_precision
+      DF_ce[basename(files), baselines[i]] <- arr_ce
       
     } else{
       DF_tp[, baselines[i]] <- arr_tp
@@ -214,6 +221,7 @@ run <- function(baselines,
       DF_roi3[, baselines[i]] <- arr_roi3
       DF_roi_tp[, baselines[i]] <- arr_roi_tp
       DF_precision[, baselines[i]] <- arr_precision
+      DF_ce[, baselines[i]] <- arr_ce
     }
   }
   
@@ -440,4 +448,15 @@ run <- function(baselines,
       sep = ''
     )
   ))
+  write.csv(DF_ce, file = file.path(
+    res_path,
+    paste(
+      profix,
+      '_ce_comparison_',
+      as.character(threshold),
+      '.csv',
+      sep = ''
+    )
+  ))
 }
+

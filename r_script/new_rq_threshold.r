@@ -3,6 +3,10 @@ getwd()
 # install.packages("devtools")
 # devtools::install_github("klainfo/ScottKnottESD", ref="development")
 # install.packages('svglite')
+install.packages("tidyverse")
+install.packages("hrbrthemes")
+install.packages("viridis")
+install.packages("svglite")
 library(ScottKnottESD)
 library(tidyverse)
 library(hrbrthemes)
@@ -34,11 +38,19 @@ draw_heatmap <-
       title = 'ROI'
     } else if (title == 'ifap2') {
       title = 'eIFA'
+    }else if (title == 'pf') {
+      title = 'PF'
+    }else if (title == 'ifa') {
+      title = 'IFA'
+    }else if (title == 'ifa_pci') {
+      title = 'IFA_PCI'
+    }else if (title == 'ifa_pii') {
+      title = 'IFA_PII'
     }
     if (xlab_string == 'all dataset') {
       xlab_string = ''
     }
-    font_size = 8
+    font_size = 6
     x_label_angle = 60
     
     
@@ -47,10 +59,10 @@ draw_heatmap <-
       facet_grid(~ranki,scales = 'free_x',space = 'free_x')+
       scale_fill_brewer(palette = "Greens", direction = -1) +
       theme(
-        plot.title = element_text(size = font_size),
+        plot.title = element_text(size = font_size,hjust=0.5),
         axis.text.x = element_text(
           angle = x_label_angle,
-          vjust = 0.95,
+          vjust = 1.1,
           hjust = 1,
           size = font_size
         ),
@@ -80,7 +92,7 @@ batch_plot <-
            res_folder,
            data_folder,
            parametric = 'np') {
-    
+    first_flag = TRUE
     for (threshold in thresholds) {
       for (indicator in indicators) {
         cat(indicator, '\n')
@@ -96,7 +108,7 @@ batch_plot <-
         colnames(all_df) = arr
         col_dataset = all_df$dataset
         all_df$dataset = NULL
-        if (indicator == 'ifap2') {
+        if (indicator == 'ifap2' || indicator == 'pf' || indicator == 'ifa'|| indicator == 'ifa_pci' || indicator == 'ifa_pii') {
           all_rank = as.data.frame(t(apply(all_df, 1, rank)))
         } else{
           all_rank = as.data.frame(t(apply(-all_df, 1, rank)))
@@ -111,6 +123,15 @@ batch_plot <-
         df <- all_rank
         df$dataset <- NULL
         sk <- sk_esd(-df, version = parametric)
+        
+        res_rank <- data.frame(sk$groups)
+        colnames(res_rank) <- paste(threshold,indicator,sep = '/')
+        if(first_flag){
+          total_res_rank = res_rank
+          first_flag = FALSE
+        }else{
+          total_res_rank[rownames(res_rank),ncol(total_res_rank)+1] = res_rank
+        }
         
         pairwise_effect_size <-
           checkDifference(sk$groups, df)
@@ -132,15 +153,15 @@ batch_plot <-
                          title = indicator,
                          prefix)
         if (threshold == '-1') {
-          xlab_string = '(a) default threshold'
+          xlab_string = '(d) default thresholds'
           p1 = p + xlab(xlab_string)
-        } else if (threshold == '20') {
-          xlab_string = '(b) SSC (PCI=20%)'
-          p2 = p + xlab(xlab_string)
         } else if (threshold == '0.2') {
-          xlab_string = '(c) SNM (PII=20%)'
+          xlab_string = '(e) SNM (PII=20%)'
+          p2 = p + xlab(xlab_string)
+        }else if (threshold == '20') {
+          xlab_string = '(f) SSC (PCI=20%)'
           p3 = p + xlab(xlab_string)
-        }
+        } 
         
         # if (threshold != 0.2) {
         #   p = p + theme(legend.position = "none")
@@ -150,14 +171,16 @@ batch_plot <-
         
       }
     }
+    write.csv(total_res_rank,file.path(res_folder,paste(prefix,'total_sk_esd_rank.csv',sep = '-')))
+    
     res_p = ggarrange(p1, p2, p3,
-              
-              common.legend = TRUE,
-              legend = "right",
-              ncol = 3, nrow = 1)
+                      
+                      common.legend = TRUE,
+                      legend = "right",
+                      ncol = 3, nrow = 1)
     ggroot = res_folder
     ggname = paste( 'total_', indicator, '_all_', parametric, '.svg', sep =
-                     '')
+                      '')
     cat('ggname:', ggname, '\n')
     
     ggsave(
@@ -174,14 +197,94 @@ batch_plot <-
 
 # for rq1
 # on all datasets
+
+batch_plot(
+  prefix = 'baseline',
+  thresholds = c('-1', '0.2', '20'),
+  indicators = c('pf'),
+  flag = 'all',
+  res_folder = '../figure/new_rq_threshold/',
+  data_folder = 'result/rq1',
+  parametric = 'np'
+)
+
 batch_plot(
   prefix = 'baseline',
   thresholds = c('-1', '0.2', '20'),
   indicators = c('mcc'),
   flag = 'all',
-  res_folder = '../figure/new_rq/',
+  res_folder = '../figure/new_rq_threshold/',
+  data_folder = 'result/rq1',
+  parametric = 'np'
+)
+
+batch_plot(
+  prefix = 'baseline',
+  thresholds = c('-1', '0.2', '20'),
+  indicators = c('recall'),
+  flag = 'all',
+  res_folder = '../figure/new_rq_threshold/',
+  data_folder = 'result/rq1',
+  parametric = 'np'
+)
+batch_plot(
+  prefix = 'baseline',
+  thresholds = c('-1', '0.2', '20'),
+  indicators = c('roi_tp'),
+  flag = 'all',
+  res_folder = '../figure/new_rq_threshold/',
   data_folder = 'result/rq1',
   parametric = 'np'
 )
 
 
+batch_plot(
+  prefix = 'baseline',
+  thresholds = c('-1', '0.2', '20'),
+  indicators = c('ifap2'),
+  flag = 'all',
+  res_folder = '../figure/new_rq_threshold/',
+  data_folder = 'result/rq1',
+  parametric = 'np'
+)
+
+batch_plot(
+  prefix = 'baseline',
+  thresholds = c('-1', '0.2', '20'),
+  indicators = c('ifa'),
+  flag = 'all',
+  res_folder = '../figure/new_rq_threshold/',
+  data_folder = 'result/rq1',
+  parametric = 'np'
+)
+
+batch_plot(
+  prefix = 'baseline',
+  thresholds = c('-1', '0.2', '20'),
+  indicators = c('ifa_pci'),
+  flag = 'all',
+  res_folder = '../figure/new_rq_threshold/',
+  data_folder = 'result/rq1',
+  parametric = 'np'
+)
+batch_plot(
+  prefix = 'baseline',
+  thresholds = c('-1', '0.2', '20'),
+  indicators = c('ifa_pii'),
+  flag = 'all',
+  res_folder = '../figure/new_rq_threshold/',
+  data_folder = 'result/rq1',
+  parametric = 'np'
+)
+
+# draw rank difference
+batch_plot(
+  prefix = 'baseline',
+  thresholds = c('-1', '0.2', '20'),
+  # indicators = c('pf','mcc'),
+  indicators = c('pf'),
+  flag = 'all',
+  res_folder = '../figure/new_rq_threshold/',
+  data_folder = 'result/rq1',
+  parametric = 'np'
+)
