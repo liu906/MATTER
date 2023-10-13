@@ -1,3 +1,5 @@
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+getwd()
 rank_df <- read.csv('../figure/new_rq_threshold/baseline-total_sk_esd_rank.csv',row.names = 1)
 ranks <- c(1,2,3)
 
@@ -109,12 +111,20 @@ p <- ggplot(total_df, aes(fill=indicator, y=frequency, x=x)) +
   theme(text = element_text(family = "Times_New_Roman",size = 8))
 
 p  
+# ggsave(
+#   file.path('../figure/new_rq_threshold/', 'total_rank_difference.svg'),
+#   plot = p,
+#   width = 5.92,
+#   height = 2.19,
+#   dpi = 3200
+# )
 ggsave(
-  file.path('../figure/new_rq_threshold/', 'total_rank_difference.svg'),
+  file.path('../figure/new_rq_threshold/', 'total_rank_difference.eps'),
   plot = p,
   width = 5.92,
   height = 2.19,
-  dpi = 3200
+  device='eps'
+  
 )
 
 
